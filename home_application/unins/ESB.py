@@ -50,7 +50,18 @@ class ESBApi(object):
         param['page'] = page
         print param
         result = self.__client.cc.search_business(param)
+        return result
 
+    def search_set(self, page=None, bk_biz_id=None):
+        if page is None:
+            page = {"start": 0, "limit": 200}
+        param = self.__param
+        fields = ["bk_set_id", "bk_set_name"]
+        param['fields'] = fields
+        param['page'] = page
+        param['bk_biz_id'] = bk_biz_id
+        print param
+        result = self.__client.cc.search_set(param)
     # def search_business(self, page=None):
     #     param = {}
     #     if page is None:

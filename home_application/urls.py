@@ -20,4 +20,6 @@ urlpatterns = patterns(
     (r'^close_job/(\d+)$', 'close_job'),
     (r'^search_all_job/$', 'search_all_job'),
     (r'^api/test/$', 'test'),
+    (r'^search_colony/(\d+)$', 'search_colony'),
+    (r'^watch_log_data/(\d+)$', 'watch_log_data'),
 )

@@ -107,7 +107,47 @@ def job_data(request):
     return response
 
 
-def search_pc(request, biz_id):
+def search_colony(request, biz_id):
+    biz_id = int(biz_id)
+    response = {}
+
+    try:
+        result = ESB.ESBApi(request).search_set(bk_biz_id=biz_id)
+        print result
+        if result['result']:
+            response['result'] = True
+            response['code'] = 0
+            response['message'] = 'success'
+            response['data'] = {}
+            list = []
+            if len(result['data']['info']) > 0:
+                for item in result['data']['info']:
+                    listDic = {}
+                    listDic['set_id'] = item['bk_set_id']
+                    listDic['set_name'] = item['bk_set_name']
+
+                    list.append(listDic)
+
+                response['data']['list'] = list
+            else:
+                response['result'] = True
+                response['code'] = 0
+                response['message'] = u'该用户下无业务'
+                response['data'] = {}
+        else:
+            response = result
+
+    except Exception, e:
+        response['result'] = False
+        response['code'] = 1
+        response['message'] = u'获取业务列表失败：%s' % e
+        response['data'] = {}
+    print response
+
+    return render_json(response)
+
+
+def search_pc(request):
     """
     获取当前业务下IP
     :param request:
@@ -119,6 +159,7 @@ def search_pc(request, biz_id):
         'code': 0,
         'data': {}
     }
+    biz_id = request.GET.get('biz_id')
     biz_id = biz_id.split(',')[0]
     biz_id = int(biz_id)
 
@@ -193,15 +234,15 @@ def run_inspect(request):
         module_name = script_contents.name
         script_type = 3
         handle_user = request.user.username
-        # t_script_data = models.T_SCRIPT_DATA.objects.create(
-        #     ip_list_all=ip_list,
-        #     contents_name=contents_name,
-        #     select_business=select_business,
-        #     script_type=script_type,
-        #     module_name=module_name,
-        #     script_data=script_data
-        # )
-        # async_run_script(handle_user, t_script_data, contents_name, select_business, ip_list, script_type=script_type, module_name=module_name, script_content=script_data)
+        t_script_data = models.T_SCRIPT_DATA.objects.create(
+            ip_list_all=ip_list,
+            contents_name=contents_name,
+            select_business=select_business,
+            script_type=script_type,
+            module_name=module_name,
+            script_data=script_data
+        )
+        async_run_script(handle_user, t_script_data, contents_name, select_business, ip_list, script_type=script_type, module_name=module_name, script_content=script_data)
 
     except Exception, e:
         response = {
@@ -308,8 +349,11 @@ def test(request):
 
     return render_json({
         "result":True,
-        "message":'hello',
-        "data":'world'
+        "message":'success',
+        "data":{
+            "user": request.user.username,
+            "time": datetime.datetime.now()
+        }
     })
 
 
@@ -345,7 +389,7 @@ def search_all_job(request):
             listDic['status1'] = u'开启'
             listDic['status2'] = u'关闭'
             listDic['url'] = '/close_job/' + str(one_data.id)
-        listDic['url_name'] = '/show_job_log/' + str(one_data.id)
+        listDic['url_name'] = '/watch_log_data/' + str(one_data.id)
         list.append(listDic)
     data = {
         'massage': True,
@@ -355,3 +399,6 @@ def search_all_job(request):
     return render_json(data)
 
 
+def watch_log_data(request, req_id):
+    data = models.T_PC_LOG.objects.filter(execution_instance=req_id)
+    return render_mako_context(request,'/home_application/all_log_data.html', {'all_log_data': data})

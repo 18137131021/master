@@ -145,6 +145,16 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix ">
+                                <label class="col-sm-3 control-label bk-lh30 pt0">选择集群：</label>
+                                <div class="col-sm-9">
+                                    <select name="select_business4" id="select_business4"
+                                            class="form-control bk-valign-top">
+                                        <option value="">请选择集群</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix ">
                                 <label class="col-sm-3 control-label bk-lh30 pt0">选择脚本：</label>
                                 <div class="col-sm-9">
                                     <select name="select_script" id="select_script"
@@ -164,7 +174,7 @@
                             </div>
                             <div class="form-group clearfix">
                                 <div class="col-sm-9 col-sm-offset-3">
-                                    <input type="submit" value="开始"
+                                    <input type="submit" value="执行作业"
                                            class="king-btn mr10  king-success">
                                 </div>
                             </div>
@@ -240,7 +250,7 @@
                         <td>开启</td>
                         <td><a href="${SITE_URL}close_job/${ one_task.id }">关闭</a></td>
                         %endif
-                        <td><a href="${SITE_URL}show_job_log/${ one_task.id }">查看详情</a></td>
+                        <td><a href="${SITE_URL}watch_log_data/${ one_task.id }">查看详情</a></td>
 
                     </tr>
                     %endfor
@@ -296,7 +306,8 @@
             var calve_data1 = $('#select_business1').val();
             var calve_data = calve_data1.split(',')[0];
             console.log('calve_data', calve_data);
-            var url_data = '${SITE_URL}' + 'search_pc/' + calve_data;
+            var url_data = '${SITE_URL}' + 'search_pc/'+ calve_data;
+            var url_data2 = '${SITE_URL}' + 'search_colony/'+ calve_data;
             console.log(calve_data);
             $.ajax({
                 url: url_data,
@@ -315,7 +326,28 @@
 
                 }
             });
+            $.ajax({
+                url: url_data2,
+                type: 'get',
+                dataType: 'json',
+                /*data: {
+                 biz_id: calve_data
+                 },*/
+                success: function (data2) {
+                    console.log('获取');
+                    $("#select_business4").empty();
+                    var keys = Object.keys(data2.data);
+                    var values = Object.values(data2.data);
+                    console.log(data2.data);
+                    for (var i = 0; i < data2.data.list.length; i++) {
+                        $('.select_business4').append('<option value='+ data2.data.list[i].set_id +'>'+ data2.data.list[i].set_name +'</option>')
+                    }
+
+
+                }
+            });
         });
+
         $("#btn4").click(function () {
             var xz = $(this).prop("checked");
             var ck = $(".check_role").prop("checked", xz);
