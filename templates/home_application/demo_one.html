@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
+    <!-- Bootstrap css -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css"
+          rel="stylesheet">
+    <!-- kendo ui css -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.common.min.css"
+          rel="stylesheet">
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.default.min.css"
+          rel="stylesheet">
+    <!-- font-awesome -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <!--蓝鲸提供的公用样式库 -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/bk/css/bk.css" rel="stylesheet">
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/bk/css/bk_pack.css" rel="stylesheet">
+    <link href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
+    <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <!-- 包括所有kendoui的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/kendoui-2015.2.624/js/kendo.all.min.js"></script>
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/bk/js/bk.js"></script>
+    <!-- 数据埋点统计 -->
+    <script src="http://magicbox.bk.tencent.com/static_api/analysis.js"></script>
+    <script src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+    <!--[if lt IE 9]><script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/html5shiv.min.js"></script><script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<style type="text/css">
+    html, body {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    table {
+        margin: 0px;
+        padding: 0px;
+        width: 30%;
+        border-collapse: collapse;
+        table-layout: fixed; /*不添加此样式，会全部显示    */
+    }
+
+    table td {
+        border: 1px solid #eef2e9;
+        /* text-overflow: ellipsis; */ /* 加上，显示省略号*/
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    table td:hover { /* 鼠标滑过  显示隐藏的内容  伴有横向的滚动条 */
+        overflow: auto;
+        text-overflow: clip;
+    }
+</style>
+<body class="bg-white" data-bg-color="bg-white">
+<div class="king-page-box">
+    <div class="king-layout1-header">
+        <nav class="">
+            <div style="overflow:hidden; z-index: inherit;" class="navbar king-horizontal-nav1  f14">
+                <div class="navbar-container">
+                    <div class="navbar-header pull-left">
+                        <a class="navbar-brand" href="javascript:;">
+                            <img src="https://magicbox.bk.tencent.com/static_api/v3/bk/images/logo.png" class="logo">
+                        </a>
+                    </div>
+                    <ul class="nav navbar-nav pull-left m0">
+                        <li class="active"><a href="javascript:void(0);">首页</a></li>
+                    </ul>
+                    <div class="navbar-header pull-right">
+                        <ul class="nav">
+                            <li class="user-info">
+                                <a href="javascript:;">
+                                    <img class="img-rounded"
+                                         src="https://magicbox.bk.tencent.com/static_api/v3/components/horizontal_nav1/images/avatar.png">
+                                    <span>用户</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="king-layout1-main clearfix">
+        <!-- sidebar start -->
+        <div class="king-layout1-sidebar" style="width:216px;">
+            <nav style="height:100%;" class="   f14">
+                <div class="king-vertical-nav4">
+                    <div class="sidebar-inner">
+                        <ul class="navi">
+                            <li class="has_submenu current open c-open active">
+                                <a href="javascript:void(0);"> <i class="fa fa-gear "> </i>
+                                    <span>任务</span>
+                                    <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li><a href="${SITE_URL}">执行任务<i class="fa fa-chevron-right pull-right"></i></a>
+                                    </li>
+                                    <li><a href="${SITE_URL}all_work/">实时任务记录<i
+                                            class="fa fa-chevron-right pull-right"></i></a></li>
+                                    <li><a href="${SITE_URL}all_script_data/">脚本管理<i
+                                            class="fa fa-chevron-right pull-right"></i></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <form action="${SITE_URL}run_inspect/" method="get">
+        <div class="king-content-wrap">
+            <div class="king-layout1-content" style="margin-left: 216px;">
+                    <div class="king-block king-block-bordered king-block-themed mb0">
+                        <div class="king-block-header king-info">
+                            <ul class="king-block-options">
+                                <li>
+                                    <!-- <button type="button"><i class="fa fa-cog"></i></button> -->
+                                </li>
+                            </ul>
+                            <h3 class="king-block-title">执行脚本</h3>
+                        </div>
+                        <div class="king-block-content">
+                            <div class="form-group clearfix ">
+                                <label class="col-sm-3 control-label bk-lh30 pt0">选择业务：</label>
+                                <div class="col-sm-9">
+                                    <select name="select_business" id="select_business1"
+                                            class="form-control bk-valign-top">
+                                        <option value="">请选择业务</option>
+                                        %for data in all_pid:
+                                        <option value=${data},${all_pid[data]}>${all_pid[data]}</option>
+                                        %endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix ">
+                                <label class="col-sm-3 control-label bk-lh30 pt0">选择脚本：</label>
+                                <div class="col-sm-9">
+                                    <select name="select_script" id="select_script"
+                                            class="form-control bk-valign-top">
+                                        <option value="">请选择脚本</option>
+                                        %for data in content_data:
+                                        <option value=${data}>${content_data[data]}</option>
+                                        %endfor
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">选择主机:</label>
+                                <span class="glyphicon glyphicon-search" style="cursor:pointer;" data-toggle="modal"
+                                      data-target="#role"></span>
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <input type="submit" value="开始"
+                                           class="king-btn mr10  king-success">
+                                </div>
+                            </div>
+                            <form class="form-horizontal"></form>
+                        </div>
+                    </div>
+                <div class="king-block king-block-bordered king-block-themed mb0">
+                    <div class="king-block-header king-info">
+                        <ul class="king-block-options">
+                            <li>
+                                <!-- <button type="button"><i class="fa fa-cog"></i></button> -->
+                            </li>
+                        </ul>
+                        <h3 class="king-block-title">执行脚本历史查询</h3>
+                    </div>
+                    <div class="form-group clearfix ">
+                        <label class="col-sm-3 control-label bk-lh30 pt0">业务：</label>
+                        <div class="col-sm-7">
+                            <select name="select_business2" id="select_business2"
+                                    class="form-control bk-valign-top">
+                                <option value="">选择业务</option>
+                                %for data in all_pid:
+                                <option value=${data}>${all_pid[data]}</option>
+                                %endfor
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix ">
+                        <label class="col-sm-3 control-label bk-lh30 pt0">选择执行人：</label>
+                        <div class="col-sm-7">
+                            <select name="select_user" id="select_user"
+                                    class="form-control bk-valign-top">
+                                <option value="">请选择执行脚本人员</option>
+                                %for data in all_user:
+                                <option value=${data}>${data}</option>
+                                %endfor
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <input id="search_job_task" type="button" value="查询"
+                                   class="king-btn mr10  king-success">
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width:20%;">主机</th>
+                        <th>脚本名称</th>
+                        <th>业务id</th>
+                        <th>状态</th>
+                        <th>开启实时状态任务</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    %if all_script_task == '':
+                    <tr>
+                        <td>暂时为空</td>
+                    </tr>
+                    %else:
+                    %for one_task in all_script_task:
+                    <tr id="search_task_data" class="search_task_data">
+                        <td>${ one_task.ips }</td>
+                        <td>${ one_task.script_name }</td>
+                        <td>${ one_task.biz_name }</td>
+                        %if one_task.status == 1:
+                        <td>关闭</td>
+                        <td><a href="${SITE_URL}open_job/${ one_task.id }">开启</a></td>
+                        %else:
+                        <td>开启</td>
+                        <td><a href="${SITE_URL}close_job/${ one_task.id }">关闭</a></td>
+                        %endif
+                        <td><a href="${SITE_URL}show_job_log/${ one_task.id }">查看详情</a></td>
+
+                    </tr>
+                    %endfor
+                    %endif
+                    </tbody>
+                </table>
+
+                <div class="modal fade" id="role" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title" id="myModalLa">主机列表</h4>
+                                <input id="btn4" type="checkbox"><label>全选</label>
+                            </div>
+                            <div class="modal-body data_list" id="data_list">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="btn3" data-dismiss="modal"
+                                        aria-hidden="true">确定
+                                </button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var li = $('.navi li');
+        li.each(function () {
+            $(this).click(function () {
+                if ($(this).hasClass('c-open')) {
+                    $(this).find('ul').slideUp(350);
+                    $(this).removeClass('c-open');
+                } else {
+                    $(this).find('ul').slideDown(350);
+                    $(this).addClass('c-open');
+                }
+            })
+        });
+        $('#select_business1').change(function () {
+            console.log('获取');
+            var calve_data1 = $('#select_business1').val();
+            var calve_data = calve_data1.split(',')[0];
+            console.log('calve_data', calve_data);
+            var url_data = '${SITE_URL}' + 'search_pc/' + calve_data;
+            console.log(calve_data);
+            $.ajax({
+                url: url_data,
+                type: 'get',
+                dataType: 'json',
+                /*data: {
+                 biz_id: calve_data
+                 },*/
+                success: function (data) {
+                    console.log('获取');
+                    $("#data_list").empty();
+                    for (var i = 0; i < data.data.list.length; i++) {
+                        $('.data_list').append('<p><input type="checkbox" name="jiaoben_role" class="check_role" value="' + data.data.list[i].ip + '|' + data.data.list[i].area_id + '"><label for="">' + data.data.list[i].area + '|' + data.data.list[i].ip + '|' + data.data.list[i].os_name + '</label></p>')
+                    }
+
+
+                }
+            });
+        });
+        $("#btn4").click(function () {
+            var xz = $(this).prop("checked");
+            var ck = $(".check_role").prop("checked", xz);
+        });
+        $('#search_job_task').click(function () {
+            var data1 = $('#select_business2').val();
+            var data2 = $('#select_user').val();
+            $.ajax({
+                url: '${SITE_URL}' + 'search_all_job/',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    biz_id: data1,
+                    user_name: data2
+                },
+                /*success: function (data) {
+                    console.log('获取');
+                    $("#search_task_data").remove();
+                    for (var i = 0; i < data.data.length; i++) {
+                        $('.search_task_data').append('<tr><td>' + data.data[i].ips + '</td><td>' + data.data[i].script_name + '</td><td>' + data.data[i].biz_id + '</td><td>' + data.data[i].status1 + '</td><td><a href=' + data.data[i].open_url + '>' + data.data[i].status2 + '</a></td><td><a href=' + data.data[i].url_name + '>查看详情</a></td><tr>')
+                    }
+
+
+                }*/
+
+                success: function (data) {
+                    var $tr = [];
+                    var $td;
+                    $('#search_task_data').empty();
+                    for (var i = 0; i < data.data.length; i++) {
+                        $td = $('<tr></tr>');
+                        $('<td class="col-md-2">' + data.data[i].ips + '</td>').appendTo($td);
+                        $('<td class="col-md-2">' + data.data[i].script_name + '</td>').appendTo($td);
+                        $('<td class="col-md-2">' + data.data[i].biz_id + '</td>').appendTo($td);
+                        $('<td class="col-md-2">' + data.data[i].status1 + '</td>').appendTo($td);
+                        $('<td class="col-md-2"><a href=' + data.data[i].open_url + '>' + data.data[i].status2 + '</a></td>').appendTo($td);
+                        $('<td class="col-md-2"><a href=' + data.data[i].url_name + '>查看详情</a></a></td>').appendTo($td);
+                        $tr.push($td);
+                    }
+                    for (var j = 0; j < $tr.length; j++) {
+                        $($tr[j]).appendTo($('#search_task_data'));
+                    }
+                }
+            });
+        });
+    });
+
+</script>
